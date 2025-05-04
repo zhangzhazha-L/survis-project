@@ -2,31 +2,30 @@ name: Deploy GitHub Pages
 
 on:
   push:
-     branches:
-        - master
+    branches:
+      - master
 
 jobs:
   build-deploy:
-     runs-on: ubuntu-latest
-     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '14'
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14'
 
-      - name: Install dependencies
-        run: npm install
+    - name: Install dependencies
+      run: npm install
 
-      - name: Build
-        run: npm run build
-        env:
-          CI: true
+    - name: Build
+      run: npm run build
+      working-directory: src  # 指定工作目录为 src
 
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./src
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./src  # 指定发布目录为 src
