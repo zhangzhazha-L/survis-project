@@ -19,13 +19,16 @@ jobs:
 
     - name: Install dependencies
       run: npm install
+      working-directory: electron  # 指定工作目录为 electron
 
     - name: Build
       run: npm run build
-      working-directory: src  # 指定工作目录为 src
+      working-directory: electron  # 指定工作目录为 electron
+      env:
+        CI: true
 
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./src  # 指定发布目录为 src
+        publish_dir: ./src  # 指定发布目录为 electron/src
